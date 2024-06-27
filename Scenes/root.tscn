@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://chk563fpa6xwy"]
+[gd_scene load_steps=8 format=3 uid="uid://chk563fpa6xwy"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_cyelb"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_cyelb"]
 [ext_resource type="Texture2D" uid="uid://b7ywjat5ewwsj" path="res://Sprites/Test/BlackSquare.png" id="2_jafnt"]
+[ext_resource type="Texture2D" uid="uid://401ih83ho4bf" path="res://Sprites/Test/RedSquare.png" id="3_7grw3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dh8jv"]
 animations = [{
@@ -17,6 +18,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nw62y"]
 size = Vector2(32, 32)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7s1ry"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k08ns"]
 
 [node name="Root" type="Node2D"]
@@ -30,6 +33,18 @@ sprite_frames = SubResource("SpriteFrames_dh8jv")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Player"]
 shape = SubResource("RectangleShape2D_nw62y")
+
+[node name="Attack" type="Area2D" parent="Player"]
+process_mode = 4
+visible = false
+position = Vector2(26, -1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/Attack"]
+scale = Vector2(0.62215, 0.636919)
+texture = ExtResource("3_7grw3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Attack"]
+shape = SubResource("RectangleShape2D_7s1ry")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(572, 553)

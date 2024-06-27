@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://b15ai3gqec3lh"]
+
+[ext_resource type="Script" path="res://Scripts/thrown_weapon.gd" id="1_djr4x"]
+[ext_resource type="Texture2D" uid="uid://4nf5str6v8ey" path="res://Sprites/Test/GreenSquare.png" id="1_kjd2d"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nm33r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kjd2d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jyljj"]
+
+[node name="Thrown_Weapon" type="Area2D"]
+script = ExtResource("1_djr4x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.577602, 0.630501)
+sprite_frames = SubResource("SpriteFrames_nm33r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jyljj")
