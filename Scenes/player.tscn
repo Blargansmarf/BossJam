@@ -22,7 +22,7 @@ size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(532, 267)
-collision_mask = 136
+collision_mask = 168
 script = ExtResource("1_jk40t")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -31,16 +31,30 @@ sprite_frames = SubResource("SpriteFrames_dh8jv")
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nw62y")
 
-[node name="Attack" type="Area2D" parent="."]
+[node name="AttackRight" type="Area2D" parent="."]
 process_mode = 4
 visible = false
 position = Vector2(26, -1)
 collision_layer = 2
 collision_mask = 8
 
-[node name="Sprite2D" type="Sprite2D" parent="Attack"]
+[node name="Sprite2D" type="Sprite2D" parent="AttackRight"]
 scale = Vector2(0.62215, 0.636919)
 texture = ExtResource("3_wiplp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRight"]
+shape = SubResource("RectangleShape2D_7s1ry")
+
+[node name="AttackLeft" type="Area2D" parent="."]
+process_mode = 4
+visible = false
+position = Vector2(-26, -1)
+collision_layer = 2
+collision_mask = 8
+
+[node name="Sprite2D" type="Sprite2D" parent="AttackLeft"]
+scale = Vector2(0.62215, 0.636919)
+texture = ExtResource("3_wiplp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackLeft"]
 shape = SubResource("RectangleShape2D_7s1ry")

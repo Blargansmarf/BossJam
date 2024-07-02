@@ -16,6 +16,7 @@ var throwing : bool = false
 var dodging : bool = false
 var thrown : bool = false
 var facing_right : bool = true
+var attacking_right : bool = true
 
 #timers
 var dodge_timer : float
@@ -38,11 +39,19 @@ func _physics_process(delta):
 		if attacking:
 			if attack_frames_current <= attack_frames_limit:
 				if attack_frames_current >= attack_frames_active_start and attack_frames_current <= attack_frames_active_end:
-					get_node("Attack").process_mode = Node.PROCESS_MODE_INHERIT
-					get_node("Attack").visible = true
+					if attacking_right:
+						get_node("AttackRight").process_mode = Node.PROCESS_MODE_INHERIT
+						get_node("AttackRight").visible = true
+					else:
+						get_node("AttackLeft").process_mode = Node.PROCESS_MODE_INHERIT
+						get_node("AttackLeft").visible = true
 				elif attack_frames_current > attack_frames_active_end:
-					get_node("Attack").process_mode = Node.PROCESS_MODE_DISABLED
-					get_node("Attack").visible = false
+					if attacking_right:
+						get_node("AttackRight").process_mode = Node.PROCESS_MODE_DISABLED
+						get_node("AttackRight").visible = false
+					else:
+						get_node("AttackLeft").process_mode = Node.PROCESS_MODE_DISABLED
+						get_node("AttackLeft").visible = false
 				attack_frames_current += 1
 			else:
 				attacking = false
@@ -58,24 +67,37 @@ func _physics_process(delta):
 			else:
 				throwing = false
 	else:
-		##check for attacks
-		if Input.is_action_just_pressed("attack"):
-			attacking = true
-			attack_frames_current = 0 
-		if Input.is_action_just_pressed("ability"):
-			abilitying = true
-			ability_timer = 0
-			var ability_node = ability_scene.instantiate()
-			ability_node.position = position
-			get_parent().add_child(ability_node)
-			#### create ability thing
-		if Input.is_action_just_pressed("throw") and not thrown:
-			throwing = true
-			thrown = true
-			throw_timer = 0
-			throw_node = thrown_scene.instantiate()
-			throw_node.position = position
-			get_parent().add_child(throw_node)
+		##check for attacks only if no other attacks are happening
+		if not attacking and not abilitying and not throwing:
+			if Input.is_action_just_pressed("attack"):
+				attacking = true
+				attacking_right = facing_right
+				attack_frames_current = 0 
+			if Input.is_action_just_pressed("ability"):
+				abilitying = true
+				ability_timer = 0
+				var ability_node = ability_scene.instantiate()
+				ability_node.position = position
+				if not facing_right:
+					ability_node.vel_x *= -1
+				get_parent().add_child(ability_node)
+			if Input.is_action_just_pressed("throw") and not thrown:
+				throwing = true
+				thrown = true
+				throw_timer = 0
+				throw_node = thrown_scene.instantiate()
+				throw_node.position = position
+				if not facing_right:
+					throw_node.vel_x *= -1
+				get_parent().add_child(throw_node)
+		if Input.is_action_just_pressed("swap") and thrown:
+			var temp_pos = position
+			var temp_vel = velocity
+			position = throw_node.position
+			velocity = throw_node.velocity
+			throw_node.position = temp_pos
+			throw_node.velocity = temp_vel
+			
 	
 	##process dodge action
 	if dodging:
