@@ -16,7 +16,9 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jyljj"]
 
-[node name="Thrown_Weapon" type="Area2D"]
+[node name="Thrown_Weapon" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 136
 script = ExtResource("1_djr4x")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

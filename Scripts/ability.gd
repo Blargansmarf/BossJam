@@ -1,9 +1,9 @@
-extends Area2D
+extends CharacterBody2D
 
 var vel_x : float = 400
-var vel_y : float = 500
+var vel_y : float = 0
 
-var lifetime : float = 3.0
+var lifetime : float = 1.0
 var life_count : float
 
 func _physics_process(delta):
@@ -11,5 +11,9 @@ func _physics_process(delta):
 		queue_free()
 	
 	life_count += delta
-	position.x += 1
+	
+	velocity.x = vel_x
+	velocity.y = vel_y
+	
+	move_and_slide()
 	
